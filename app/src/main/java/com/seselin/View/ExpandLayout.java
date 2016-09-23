@@ -16,6 +16,7 @@ public class ExpandLayout extends RelativeLayout {
 
     public ExpandLayout(Context context) {
         this(context, null);
+
     }
 
     public ExpandLayout(Context context, AttributeSet attrs) {
@@ -24,20 +25,26 @@ public class ExpandLayout extends RelativeLayout {
 
     public ExpandLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        initView();
     }
 
     private View layoutView;
     private int viewHeight;
     private boolean isExpand;
-    private long animationDuration = 300;
+    private long animationDuration;
+
+    private void initView() {
+        layoutView = this;
+        isExpand = true;
+        animationDuration = 300;
+        setViewDimensions();
+    }
 
     /**
      * @param isExpand 初始状态是否折叠
      */
-    public void initView(boolean isExpand) {
-        this.layoutView = this;
+    public void initExpand(boolean isExpand) {
         this.isExpand = isExpand;
-        setViewDimensions();
         if (!isExpand) {
             animateToggle(10);
         }

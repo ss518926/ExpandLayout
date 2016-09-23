@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void initExpandView() {
         mExpandLayout = (ExpandLayout) findViewById(R.id.expandLayout);
-        mExpandLayout.initView(false);
+        mExpandLayout.initExpand(false);
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
