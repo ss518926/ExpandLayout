@@ -1,4 +1,4 @@
-package com.seselin.View;
+package com.seselin.view;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -16,7 +16,6 @@ public class ExpandLayout extends RelativeLayout {
 
     public ExpandLayout(Context context) {
         this(context, null);
-
     }
 
     public ExpandLayout(Context context, AttributeSet attrs) {
@@ -32,6 +31,7 @@ public class ExpandLayout extends RelativeLayout {
     private int viewHeight;
     private boolean isExpand;
     private long animationDuration;
+    private boolean lock;
 
     private void initView() {
         layoutView = this;
@@ -45,9 +45,7 @@ public class ExpandLayout extends RelativeLayout {
      */
     public void initExpand(boolean isExpand) {
         this.isExpand = isExpand;
-        if (!isExpand) {
-            animateToggle(10);
-        }
+        setViewDimensions();
     }
 
     /**
@@ -70,6 +68,7 @@ public class ExpandLayout extends RelativeLayout {
                 if (viewHeight <= 0) {
                     viewHeight = layoutView.getMeasuredHeight();
                 }
+                setViewHeight(layoutView, isExpand ? viewHeight : 0);
             }
         });
     }
@@ -93,12 +92,16 @@ public class ExpandLayout extends RelativeLayout {
         heightAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                float val = (float) animation.getAnimatedValue();
-                setViewHeight(layoutView, (int) val);
+                int value = (int) (float) animation.getAnimatedValue();
+                setViewHeight(layoutView, value);
+                if (value == viewHeight || value == 0) {
+                    lock = false;
+                }
             }
         });
 
         heightAnimation.start();
+        lock = true;
     }
 
     public boolean isExpand() {
@@ -122,6 +125,9 @@ public class ExpandLayout extends RelativeLayout {
     }
 
     public void toggleExpand() {
+        if (lock) {
+            return;
+        }
         if (isExpand) {
             collapse();
         } else {
