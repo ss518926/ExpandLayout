@@ -14,7 +14,7 @@
         android:text="点击展开/收缩" />
 
 
-    <com.seselin.View.ExpandLayout
+    <com.seselin.view.ExpandLayout
         android:id="@+id/expandLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:padding="15dp"
             android:text="这里是可收缩布局内部" />
 
-    </com.seselin.View.ExpandLayout>
+    </com.seselin.view.ExpandLayout>
 
     <Button
         android:layout_width="match_parent"
